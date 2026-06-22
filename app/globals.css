@@ -1,0 +1,340 @@
+@import "tailwindcss";
+
+:root {
+  /* === SENTINEL COLOR PALETTE === */
+  --bg-void: #050508;
+  --bg-deep: #0a0a0f;
+  --bg-surface: #0f0f18;
+  --bg-card: #13131f;
+  --bg-card-hover: #18182a;
+  --bg-elevated: #1c1c2e;
+
+  /* Borders */
+  --border-subtle: rgba(139, 80, 30, 0.15);
+  --border-default: rgba(180, 100, 30, 0.25);
+  --border-accent: rgba(212, 140, 30, 0.4);
+
+  /* Gold/Amber accent */
+  --gold-dim: #8b6914;
+  --gold-mid: #c8900a;
+  --gold: #d4930a;
+  --gold-bright: #f0a800;
+  --gold-glow: rgba(212, 147, 10, 0.3);
+
+  /* Red / Threat */
+  --red-deep: #4a0a0a;
+  --red-mid: #8b1515;
+  --red: #c0392b;
+  --red-bright: #e74c3c;
+  --red-vivid: #ff2d55;
+  --red-glow: rgba(231, 76, 60, 0.3);
+
+  /* Maroon */
+  --maroon: #6b1515;
+  --maroon-mid: #8b1a1a;
+  --maroon-light: #a52020;
+
+  /* Status */
+  --critical: #ff2d55;
+  --high: #ff6b2b;
+  --medium: #ffb800;
+  --low: #34c98c;
+  --info: #6b7a8d;
+
+  /* Text */
+  --text-primary: #f0e8d0;
+  --text-secondary: #a89878;
+  --text-muted: #6b5f4a;
+  --text-disabled: #3d3428;
+
+  /* Fonts */
+  --font-inter: "Inter", sans-serif;
+  --font-rajdhani: "Rajdhani", sans-serif;
+}
+
+/* ===== RESET ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-inter);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-mid);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: rgba(212, 147, 10, 0.3);
+  color: var(--text-primary);
+}
+
+/* ===== TYPOGRAPHY ===== */
+.font-display {
+  font-family: var(--font-rajdhani);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ===== ANIMATED BACKGROUND GRID ===== */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: linear-gradient(
+      to right,
+      rgba(139, 80, 30, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(139, 80, 30, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+/* ===== GLOW EFFECTS ===== */
+.glow-gold {
+  box-shadow: 0 0 20px var(--gold-glow), 0 0 60px rgba(212, 147, 10, 0.1);
+}
+.glow-red {
+  box-shadow: 0 0 20px var(--red-glow), 0 0 60px rgba(231, 76, 60, 0.1);
+}
+.text-glow-gold {
+  text-shadow: 0 0 20px rgba(212, 147, 10, 0.6),
+    0 0 40px rgba(212, 147, 10, 0.3);
+}
+.text-glow-red {
+  text-shadow: 0 0 20px rgba(255, 45, 85, 0.6), 0 0 40px rgba(255, 45, 85, 0.3);
+}
+
+/* ===== GLASS CARD ===== */
+.glass-card {
+  background: rgba(13, 13, 22, 0.85);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-card:hover {
+  border-color: var(--border-accent);
+}
+
+/* ===== SCAN BUTTON ===== */
+.scan-btn {
+  position: relative;
+  background: linear-gradient(135deg, #8b1a1a 0%, #6b1515 50%, #8b1a1a 100%);
+  border: 1px solid var(--red-mid);
+  border-radius: 8px;
+  padding: 12px 32px;
+  color: var(--text-primary);
+  font-family: var(--font-rajdhani);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+.scan-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(255, 45, 85, 0.15) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.scan-btn:hover::before {
+  opacity: 1;
+}
+.scan-btn:hover {
+  border-color: var(--red-bright);
+  box-shadow: 0 0 24px rgba(231, 76, 60, 0.4), 0 4px 16px rgba(0, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+.scan-btn:active {
+  transform: translateY(0);
+}
+.scan-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== PULSE RING ANIMATION ===== */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* ===== SCAN LINE ANIMATION ===== */
+@keyframes scan-line {
+  0% {
+    top: 0%;
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+.scan-line {
+  animation: scan-line 2s ease-in-out infinite;
+}
+
+/* ===== FADE IN ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in-up {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* ===== SHIMMER ===== */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+/* ===== BLINK ===== */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+.blink {
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+/* ===== SEVERITY BADGE ===== */
+.badge-critical {
+  background: rgba(255, 45, 85, 0.15);
+  border: 1px solid rgba(255, 45, 85, 0.4);
+  color: #ff2d55;
+}
+.badge-high {
+  background: rgba(255, 107, 43, 0.15);
+  border: 1px solid rgba(255, 107, 43, 0.4);
+  color: #ff6b2b;
+}
+.badge-medium {
+  background: rgba(255, 184, 0, 0.12);
+  border: 1px solid rgba(255, 184, 0, 0.4);
+  color: #ffb800;
+}
+.badge-low {
+  background: rgba(52, 201, 140, 0.12);
+  border: 1px solid rgba(52, 201, 140, 0.4);
+  color: #34c98c;
+}
+.badge-info {
+  background: rgba(107, 122, 141, 0.12);
+  border: 1px solid rgba(107, 122, 141, 0.4);
+  color: #6b7a8d;
+}
+
+/* ===== RISK SCORE RING ===== */
+.risk-ring {
+  filter: drop-shadow(0 0 8px rgba(255, 45, 85, 0.5));
+}
+
+/* ===== MONACO EDITOR OVERRIDE ===== */
+.monaco-container .monaco-editor {
+  background: var(--bg-surface) !important;
+}
+.monaco-container .monaco-editor .margin {
+  background: var(--bg-card) !important;
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-default),
+    transparent
+  );
+}
+
+/* ===== STAT CARD ===== */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 16px 20px;
+  transition: all 0.2s ease;
+}
+.stat-card:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+}
